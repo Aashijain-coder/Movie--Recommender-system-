@@ -102,12 +102,12 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             console.log("Loading datasets...");
             // Load metadata
-            const metaRes = await fetch("data/movies_metadata.json");
+            const metaRes = await fetch("movies_metadata.json");
             if (!metaRes.ok) throw new Error("Failed to load movies metadata");
             allMovies = await metaRes.json();
             
             // Load similarity list
-            const simRes = await fetch("data/similarity_top100.json");
+            const simRes = await fetch("similarity_top100.json");
             if (!simRes.ok) throw new Error("Failed to load similarity mappings");
             similarityMatrix = await simRes.json();
             
