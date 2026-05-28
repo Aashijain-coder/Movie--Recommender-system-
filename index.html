@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMatch | Premium Movie Recommender</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Nebula effects -->
+    <div class="nebula-bg">
+        <div class="nebula-orb orb-1"></div>
+        <div class="nebula-orb orb-2"></div>
+        <div class="nebula-orb orb-3"></div>
+    </div>
+
+    <!-- App Container -->
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header class="main-header">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                </div>
+                <span class="logo-text">CineMatch</span>
+            </div>
+            
+            <!-- Search Widget -->
+            <div class="search-widget" id="searchWidget">
+                <div class="search-input-wrapper">
+                    <span class="search-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </span>
+                    <input type="text" id="searchInput" placeholder="Search 4,800+ movies..." autocomplete="off">
+                    <button id="clearSearchBtn" class="clear-btn hidden">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <div id="autocompleteDropdown" class="autocomplete-dropdown hidden"></div>
+            </div>
+
+            <!-- Header Actions -->
+            <div class="header-actions">
+                <button id="settingsBtn" class="action-btn" title="API Settings">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            
+            <!-- Hero Movie Details Section -->
+            <section id="movieHero" class="movie-hero-section loading-state">
+                <div class="hero-backdrop" id="heroBackdrop"></div>
+                <div class="hero-overlay"></div>
+                
+                <div class="hero-content">
+                    <div class="hero-poster-wrapper">
+                        <img id="heroPoster" src="" alt="Movie Poster" class="hero-poster">
+                        <div class="poster-shine"></div>
+                    </div>
+                    
+                    <div class="hero-info">
+                        <div class="hero-meta-row">
+                            <span id="heroYear" class="meta-badge">YYYY</span>
+                            <span id="heroRuntime" class="meta-badge">0 min</span>
+                            <div class="rating-badge-wrapper">
+                                <svg class="rating-ring" width="36" height="36">
+                                    <circle class="rating-ring-bg" cx="18" cy="18" r="15"></circle>
+                                    <circle id="ratingRingProgress" class="rating-ring-progress" cx="18" cy="18" r="15"></circle>
+                                </svg>
+                                <span id="heroRating" class="rating-text">0.0</span>
+                            </div>
+                        </div>
+                        
+                        <h1 id="heroTitle" class="hero-title">Select a Movie</h1>
+                        <p id="heroTagline" class="hero-tagline">Your next cinematic journey awaits</p>
+                        
+                        <div id="heroGenres" class="genres-row">
+                            <!-- Genre list goes here -->
+                        </div>
+                        
+                        <p id="heroOverview" class="hero-overview">
+                            Use the search bar above to look up any movie from the TMDB 5000 dataset. We will suggest 10 similar movies based on machine learning text processing, along with their match score, poster, and user reviews.
+                        </p>
+                        
+                        <div class="people-info">
+                            <div class="person-tag">
+                                <span class="person-label">Director:</span>
+                                <span id="heroDirector" class="person-name">Name</span>
+                            </div>
+                            <div class="person-tag">
+                                <span class="person-label">Cast:</span>
+                                <span id="heroCast" class="person-name">Actor 1, Actor 2, Actor 3</span>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="hero-actions-row">
+                            <a id="trailerBtn" href="#" target="_blank" class="primary-btn hidden">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                Watch Trailer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommendations Grid -->
+            <section id="recommendationsSection" class="recs-section">
+                <div class="section-header">
+                    <h2 class="section-title">Similar Movie Recommendations</h2>
+                    <span class="section-subtitle">Based on machine learning similarity tags</span>
+                </div>
+                
+                <div id="recsGrid" class="recs-grid scroll-container">
+                    <!-- Cards will be populated here -->
+                </div>
+            </section>
+
+            <!-- Movie Reviews Section -->
+            <section id="reviewsSection" class="reviews-section">
+                <div class="section-header">
+                    <h2 class="section-title">Audience Reviews</h2>
+                    <span id="reviewsSource" class="section-subtitle">Simulated based on movie themes</span>
+                </div>
+                
+                <div id="reviewsGrid" class="reviews-grid">
+                    <!-- Review cards will be populated here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <p>Powered by Content-based Filtering on TMDB 5000 dataset. Made with ♥ for cinema lovers.</p>
+        </footer>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal-overlay hidden">
+        <div class="modal-content glass-card">
+            <button id="closeSettingsBtn" class="modal-close-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <h2 class="modal-title">Settings & API Configuration</h2>
+            <p class="modal-desc">Configure your TMDB API keys to enable live posters, backdrop wallpapers, trailer links, and authentic reviews fetched directly from The Movie Database.</p>
+            
+            <div class="form-group">
+                <label for="tmdbKeyInput" class="form-label">TMDB API Key (v3 auth)</label>
+                <div class="api-key-input-wrapper">
+                    <input type="password" id="tmdbKeyInput" class="form-input" placeholder="Paste your API key here...">
+                    <button id="toggleKeyVisibility" class="visibility-btn" type="button">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
+                </div>
+                <div class="help-text">
+                    Don't have a key? It's free! Get one by registering at <a href="https://www.themoviedb.org/" target="_blank">themoviedb.org</a>.
+                </div>
+                <div id="serverKeyIndicator" class="server-key-info hidden">
+                    <span class="info-icon">✓</span> Server-side TMDB key is configured in <code>.env</code>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="saveSettingsBtn" class="primary-btn">Save Configuration</button>
+                <button id="clearSettingsBtn" class="secondary-btn">Clear API Key</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
